@@ -1,0 +1,58 @@
+{
+  "groups": [
+    {
+      "name": "man",
+      "type": "com.example.demo.model.Man",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "wife",
+      "type": "com.example.demo.model.Wife",
+      "sourceType": "com.example.demo.model.Wife"
+    }
+  ],
+  "properties": [
+    {
+      "name": "man.family",
+      "type": "java.util.Map<java.lang.Object,java.lang.Object>",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "man.friend",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "man.height",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "man.high",
+      "type": "java.lang.String",
+      "description": "字面量${key}从环境变量、配置文件中获取值#{SpEL}",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "man.longs",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "man.wife",
+      "type": "com.example.demo.model.Wife",
+      "sourceType": "com.example.demo.model.Man"
+    },
+    {
+      "name": "wife.height",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.model.Wife"
+    },
+    {
+      "name": "wife.high",
+      "type": "java.lang.String",
+      "sourceType": "com.example.demo.model.Wife"
+    }
+  ],
+  "hints": []
+}

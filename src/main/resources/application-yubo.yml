@@ -1,0 +1,20 @@
+server:
+  port: 8086
+man:
+  high: 178cm
+  height: 140kg
+  longs: 18cm
+  family: {father: 于圣旺,mother: 孙爱珍}
+  friend:
+    - cz
+    - zwy
+    - cjm
+  wife:
+    high: 158cm
+    height: 160kg
+spring:
+ thymeleaf:
+  cache: false
+
+
+
