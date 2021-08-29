@@ -18,6 +18,22 @@ public class People {
         this.name = name;
     }
 
+    public WeakReference<People> getWeakReference() {
+        return weakReference;
+    }
+
+    public void setWeakReference(WeakReference<People> weakReference) {
+        this.weakReference = weakReference;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "People{" +
