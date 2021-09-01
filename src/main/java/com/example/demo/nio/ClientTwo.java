@@ -5,13 +5,13 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-public class Client {
+public class ClientTwo {
     public static void main(String[] args) {
         new Thread(()->startConnect()).start();
     }
 
     private static void startConnect(){
-        InetSocketAddress address = new InetSocketAddress("127.0.0.1",8088);//设置要连接的地址和ip
+        InetSocketAddress address = new InetSocketAddress("127.0.0.1",8088);
         SocketChannel socketChannel = null;
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         try{
