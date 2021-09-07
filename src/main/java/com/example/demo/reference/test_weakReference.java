@@ -7,12 +7,10 @@ import java.lang.ref.WeakReference;
  */
 public class test_weakReference {
     public static void main(String[] args) throws InterruptedException {
-        People p1 = new People();
-        WeakReference<People> weakReference = new WeakReference<>(p1);
+        WeakReference<People> weakReference = new WeakReference<>(new People());
+        System.out.println(weakReference.get());
         System.gc();
-        p1 = null;
-        System.out.println(p1);
-
+        Thread.sleep(1000);
         System.out.println(weakReference.get());
 ////      System.out.println(weakReference.get());
 ////      System.gc();
