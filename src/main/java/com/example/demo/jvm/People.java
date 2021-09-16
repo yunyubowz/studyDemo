@@ -3,6 +3,7 @@ package com.example.demo.jvm;
 public class People {
     private int age;//姓名
     private String name;//年龄
+    private byte[] bytes = new byte[1024*1000*1000];
 
     public People(int age,String name){
         this.age = age;
