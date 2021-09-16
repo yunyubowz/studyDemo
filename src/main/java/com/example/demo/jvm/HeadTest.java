@@ -22,6 +22,7 @@ import java.util.List;
  *  重复2,3次当对象的经历15次minor gc还没有被回收，对象会被放入老年代
  *  当老年代满了会触发fullgc此时会stw（Stop the world）停止所有正在运行的线程，jvm调优即减少fullgc的发生
  *  将符号引用替换为直接引用，该阶段会把一些静态方法(符号引用，比如 main()方法)替换为指向数据所存内存的指针或句柄等(直接引用)，这是所谓的静态链 接过程(类加载期间完成)，动态链接是在程序运行期间完成的将符号引用替换为直接 引用，下节课会讲到动态链接
+ *
  */
 public class HeadTest {
     private byte[] bytes = new byte[1024*100];//100kb大小
