@@ -10,6 +10,9 @@ public class test_countDownLatch {
         new Thread(()->m()).start();
         countDownLatch.await();
         System.out.println("阻塞冲开了");
+        countDownLatch = new CountDownLatch(1);
+        countDownLatch.await();
+        System.out.println("阻塞冲开了");
 
     }
 

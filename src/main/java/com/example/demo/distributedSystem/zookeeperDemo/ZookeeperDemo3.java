@@ -1,4 +1,4 @@
-package com.example.demo.distributedSystem;
+package com.example.demo.distributedSystem.zookeeperDemo;
 
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.exception.ZkMarshallingError;

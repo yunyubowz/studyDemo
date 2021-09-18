@@ -1,4 +1,4 @@
-package com.example.demo.distributedSystem;
+package com.example.demo.distributedSystem.zookeeperDemo;
 
 /**
  * zookeeper
