@@ -4,15 +4,11 @@ package com.example.demo.distributedSystem.zookeeperDemo;
 import com.example.demo.util.SystemMonitor;
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.zookeeper.CreateMode;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import sun.management.snmp.jvmmib.EnumJvmThreadCpuTimeMonitoring;
-
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +47,6 @@ public class ZookeeperDemo5 {
          */
         buildRoot(rootPath);
         Map<String,String> data = getSystemInfo();
-        System.out.println(data);
         /**
          * 创建上报的节点
          */
@@ -60,10 +55,8 @@ public class ZookeeperDemo5 {
          * 创建线程实时更新cpu数据
          */
         thread = new Thread(()->{
-
             while (true){
                 Map<String,String> updateData = getSystemInfo();
-                System.out.println(updateData);
                 zkClient.writeData(nodePath,updateData);
                 try {
                     Thread.sleep(5000);
@@ -71,7 +64,6 @@ public class ZookeeperDemo5 {
                     e.printStackTrace();
                 }
             }
-
         });
         thread.start();
     }
@@ -107,8 +99,7 @@ public class ZookeeperDemo5 {
             return inetAddress.getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        }finally {
-            return "获取ip失败";
         }
+        return "获取ip失败";
     }
 }
