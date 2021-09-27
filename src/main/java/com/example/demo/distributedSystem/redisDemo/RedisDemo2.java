@@ -1,4 +1,4 @@
-package com.example.demo.distributedSystem.zookeeperDemo;
+package com.example.demo.distributedSystem.redisDemo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
