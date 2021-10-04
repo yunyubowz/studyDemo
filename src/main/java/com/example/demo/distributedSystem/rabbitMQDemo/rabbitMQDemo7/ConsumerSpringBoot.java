@@ -7,8 +7,6 @@ import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 /**
  * springboot整合rabbitMQ
  */
@@ -17,9 +15,11 @@ public class ConsumerSpringBoot {
 
     @RabbitListener(queues=RabbitMQConfig.QueueName)
     public void ListenerDemo(Message message, Channel channel) {
-       System.out.println("message"+message);
+       System.out.println(message);
         try {
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+            Thread.sleep(100);
+            System.out.println(message.getMessageProperties().getDeliveryTag());
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         } catch (Exception e) {
             e.printStackTrace();
         }
