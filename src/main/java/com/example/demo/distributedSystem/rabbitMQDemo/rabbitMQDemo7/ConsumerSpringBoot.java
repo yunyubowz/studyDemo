@@ -19,7 +19,7 @@ public class ConsumerSpringBoot {
         try {
             Thread.sleep(100);
             System.out.println(message.getMessageProperties().getDeliveryTag());
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         } catch (Exception e) {
             e.printStackTrace();
         }
