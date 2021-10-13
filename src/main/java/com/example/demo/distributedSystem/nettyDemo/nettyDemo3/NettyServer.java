@@ -7,6 +7,12 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 
 public class NettyServer {
@@ -28,6 +34,12 @@ public class NettyServer {
 
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+//                            //设置对象解码器
+//                            ch.pipeline().addLast("decode", new ObjectDecoder(ClassResolvers.weakCachingResolver(this.getClass().getClassLoader())));
+//                            //设置对象编码器
+//                            ch.pipeline().addLast("encoder",new ObjectEncoder());
+                            ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                            ch.pipeline().addLast(new IdleStateHandler(3,0,0));
                             //对workerGroup的SocketChannel设置处理器
                             ch.pipeline().addLast(new NettyServerHandlerkk());
                         }
@@ -57,6 +69,7 @@ public class NettyServer {
     }
 
     static class NettyServerHandlerkk extends ChannelInboundHandlerAdapter {
+        int readIdleTimes = 0;
 
         /**
          * 读取客户端发送的数据
@@ -68,11 +81,17 @@ public class NettyServer {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println("服务器读取线程 " + Thread.currentThread().getName());
+            ByteBuf buf = (ByteBuf)msg;
+            String message = buf.toString(CharsetUtil.UTF_8);
+            if(message.equals("Heartbeat Packet")){
+                System.out.println("received is ok");
+            }else{
+                System.out.println("客户端发送消息是:" + message);
+            }
             //Channel channel = ctx.channel();
             //ChannelPipeline pipeline = ctx.pipeline(); //本质是一个双向链接, 出站入站
             //将 msg 转成一个 ByteBuf，类似NIO 的 ByteBuffer
-            ByteBuf buf = (ByteBuf) msg;
-            System.out.println("客户端发送消息是:" + buf.toString(CharsetUtil.UTF_8));
+
         }
 
         /**
@@ -83,10 +102,39 @@ public class NettyServer {
          */
         @Override
         public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-            ByteBuf buf = Unpooled.copiedBuffer("是多少大所多2", CharsetUtil.UTF_8);
+            ByteBuf buf = Unpooled.copiedBuffer("没有\n", CharsetUtil.UTF_8);
+            User user = new User();
+            user.setName("王玲玲");
+            user.setAge(19);
             ctx.channel().writeAndFlush(buf);
-            buf = Unpooled.copiedBuffer("HelloClient", CharsetUtil.UTF_8);
-            ctx.writeAndFlush(buf);
+        }
+
+
+        @Override
+        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+            IdleStateEvent event = (IdleStateEvent) evt;
+
+            String eventType = null;
+            switch (event.state()) {
+                case READER_IDLE:
+                    eventType = "读空闲";
+                    readIdleTimes++; // 读空闲的计数加1
+                    break;
+                case WRITER_IDLE:
+                    eventType = "写空闲";
+                    // 不处理
+                    break;
+                case ALL_IDLE:
+                    eventType = "读写空闲";
+                    // 不处理
+                    break;
+            }
+            System.out.println(ctx.channel().remoteAddress() + "超时事件：" + eventType);
+            if (readIdleTimes > 3) {
+                System.out.println(" [server]读空闲超过3次，关闭连接，释放更多资源");
+                ctx.channel().writeAndFlush("idle close");
+                ctx.channel().close();
+            }
         }
 
         /**
