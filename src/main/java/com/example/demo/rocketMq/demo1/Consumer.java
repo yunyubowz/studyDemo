@@ -17,7 +17,7 @@ public class Consumer {
          */
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name_4");
 
-        consumer.setNamesrvAddr("www.xn--qby4ca.xn--6qq986b3xl:9876");
+        consumer.setNamesrvAddr("129.28.187.162:9876");
 
         /*
          * Specify where to start in case the specified consumer group is a brand new one.
